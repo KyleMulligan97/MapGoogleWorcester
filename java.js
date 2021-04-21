@@ -380,7 +380,7 @@ function initialize(){
 };
 //init the map options
   var mapOptions = {
-    zoom:13,
+    zoom:15,
     center:latlng,
     disableDefaultUI: true,
     fullscreenControl: true,
@@ -418,40 +418,45 @@ icons = {
  };
 
  // Loop through the results array and place a marker for each
- // set of coordinates.
- eqfeed_callback = function (results) {
- for (let i = 0; i < results.features.length; i++) {
+  // set of coordinates.
+  eqfeed_callback = function (results) {
+  for (let i = 0; i < results.features.length; i++) {
 
 
-   const coords = results.features[i].geometry.coordinates;
-   const latLng = new google.maps.LatLng(coords[1], coords[0]);
-   const contentString =
-    '<div id="content"><h1 style="font-size: 30px; color: purple">' + results.features[i].geometry.name +
-       '</h1>' + '<h2 style="font-size: 15px; color: purple">' + results.features[i].geometry.Address + '</h2>' +
-       '<p style="font-size: 12px; color: purple">' + results.features[i].geometry.Description  +'</p> </div>';
+    const coords = results.features[i].geometry.coordinates;
+    const latLng = new google.maps.LatLng(coords[1], coords[0]);
+    const contentString =
+     '<div id="content"><h1 style="font-size: 30px; color: purple">' + results.features[i].geometry.name +
+        '</h1>' + '<h2 style="font-size: 15px; color: purple">' + results.features[i].geometry.Address + '</h2>' +
+        '<p style="font-size: 12px; color: purple">' + results.features[i].geometry.Description  +'</p> </div>';
 
 
-//create a marker within the for loop
-   const marker = new google.maps.Marker({
-     position: latLng,
-     icon: icons[results.features[i].geometry.type].icon,
-     map: map,
-   });
-//create an info window in the for loop keeping them in scope
-   const infowindow = new google.maps.InfoWindow({
-       content: contentString,
-       maxWidth: 200
+ //create a marker within the for loop
+    const marker = new google.maps.Marker({
+      position: latLng,
+      icon: icons[results.features[i].geometry.type].icon,
+      map: map,
+    });
+ //create an info window in the for loop keeping them in scope
+    const infowindow = new google.maps.InfoWindow({
+        content: contentString,
+        maxWidth: 200
 
-   });
+    });
 
-//when a merks is clicked exectue this function opening an infowindow using the google maps library,
-   marker.addListener('click', function () {
-       infowindow.open(marker.get('map'), marker);
-       //create an inforObj array because the docs told us to
-       InforObj[0] = infowindow;
-   });
- }
+ //when a merks is clicked exectue this function opening an infowindow using the google maps library,
+    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+     return function() {
+       infowindow.setContent(contentString);
+       map.setCenter(marker.getPosition());
+       map.setZoom(50);
+       setTimeout(function () { infowindow.close(); }, 5000);
+       infowindow.open(map, marker);
+     }
+   })(marker, i));
+  }
 
 
 
- }
+
+  }
