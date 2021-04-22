@@ -1,7 +1,19 @@
 
+
+
 <script src="java.js" charset="utf-8"></script>
 <body onLoad="initialize()">
+<link rel="stylesheet" href="css/legend.css">
  <div id="map" style="width: 100rem; height: 50rem;"></div>
+ <div id="legend">
+   <ul>
+     <li>   <image src= "img/shoppingcentre.ico"> Shopping Centre</image> </li>
+      <li>   <image src= "img/fuel.ico"> </image>Petrol Station </li>
+       <li>   <image src= "img/clothing.ico"> </image>Shopping Outlet </li>
+        <li>   <image src= "img/restaurant.ico"> </image>Restaurant </li>
+   </ul>
+
+   </div>
   <div>
     <input id="address" type="textbox" value="Worcester , UK">
     <input type="button" value="Encode" onclick="codeAddress()" id="submit">
