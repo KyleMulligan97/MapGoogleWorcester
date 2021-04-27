@@ -9,14 +9,13 @@ function getInputValue(){
     .then(response => response.json())
     .then(function(data){
       for(var i=0 ; i<data.results.length;i++){
-          console.log(data.results[i]);
-        console.log(data.results[i].name);
-        console.log(data.results[i].rating);
+
         //add the row here
         $('ul').before(data.results[i].name);
         $('ul').before('<div id="innerdiv" class="col-xl-12 col-lg-12">'+"Rated " +data.results[i].rating+"/5");
         $('ul').before("user ratings: "+data.results[i].rating+data.results[i].user_ratings_total+'<br>');
-      $('ul').before('<image src='+data.results[i].icon+'></image>');
+        $('ul').before('<image src='+data.results[i].icon+'></image>');
+        $('ul').before(data.results[i].vicinity + '<br>');
         $('ul').before("---------------------------------------------------------"+"<br>");
 
       }
